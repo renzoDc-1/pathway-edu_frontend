@@ -1,26 +1,99 @@
 .header {
-    background-color: #00BFFF;
-    padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #282c34;
+  position: relative; /* Asegúrate de que el menú se posicione correctamente */
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+nav ul li {
+  display: inline;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+nav ul li a:hover {
+  color: #61dafb; /* Cambia a un color más claro al pasar el mouse */
+}
+
+.user-icon {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative; /* Para que el dropdown se posicione correctamente */
+}
+
+.user-icon img {
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.user-icon span {
+  color: white;
+  margin-right: 10px; /* Espacio entre el nombre y el dropdown */
+}
+
+.logout-dropdown {
+  display: none; /* Inicialmente oculto */
+  position: absolute;
+  top: 50px; /* Ajusta según sea necesario */
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000; /* Asegúrate de que esté sobre otros elementos */
+  padding: 10px;
+  transition: opacity 0.3s ease, visibility 0.3s ease; /* Transiciones suaves */
+}
+
+.user-icon:hover .logout-dropdown {
+  display: block; /* Muestra el dropdown al pasar el mouse */
+}
+
+/* Estilos para el botón de cerrar sesión */
+.logout-dropdown button {
+  background-color: transparent; /* Fondo transparente */
+  border: none; /* Sin borde */
+  color: #007bff; /* Color del texto */
+  cursor: pointer; /* Cambia el cursor al pasar el mouse */
+  padding: 10px;
+  width: 100%; /* Ocupa el ancho completo del menú */
+  text-align: left; /* Alineación a la izquierda */
+  transition: background-color 0.2s; /* Efecto de fondo al pasar el mouse */
+}
+
+.logout-dropdown button:hover {
+  background-color: #f0f0f0; /* Fondo claro al pasar el mouse */
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column; /* Cambia a columna en pantallas pequeñas */
+    align-items: flex-start; /* Alinea a la izquierda */
   }
-  
-  .header ul {
-    list-style: none;
-    display: flex;
-    justify-content: space-around;
+
+  nav ul {
+    flex-direction: column; /* Cambia a columna en el menú */
   }
-  
-  .header ul li {
-    display: inline;
-    margin: 0 15px;
+
+  nav ul li {
+    margin-bottom: 10px; /* Espacio entre los elementos */
   }
-  
-  .header ul li a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
+
+  .user-icon {
+    margin-top: 10px; /* Espacio arriba para el icono del usuario */
   }
-  
-  .header ul li a:hover {
-    text-decoration: underline;
-  }
-  
+}

@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './Login.css'; // Asegúrate de tener estilos en este archivo
+import { useNavigate } from 'react-router-dom';
+import './Login.css';
 
-function Login() {
+function Login({ setUserName }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [userName, setUserName] = useState(null);
+  const navigate = useNavigate();
 
-  // Manejo del envío del formulario
+  // Función para manejar el envío del formulario de login
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    setUserName(null);
 
     try {
       const response = await axios.post('http://18.229.118.35:3001/api/users/login', {
@@ -22,19 +22,14 @@ function Login() {
         password,
       });
 
-      // Verificamos el mensaje en la respuesta
       const { message, user } = response.data;
 
       if (message === "User logged in successfully") {
-        // Uso correcto de template literals
         setUserName(`${user.first_name} ${user.last_name}`);
-        alert(`Bienvenido, ${user.first_name} ${user.last_name}!`);
-        // Aquí podrías redirigir al usuario o almacenar un token
-        // Ejemplo: window.location.href = '/dashboard';
-      } else if (message === "Invalid credentials") {
-        setError('Credenciales inválidas');
+        localStorage.setItem('user', JSON.stringify(user)); // Guardar datos del usuario en localStorage
+        navigate('/dashboard'); // Redirigir al Dashboard
       } else {
-        setError('Ocurrió un error inesperado');
+        setError('Credenciales inválidas');
       }
 
     } catch (error) {
@@ -70,7 +65,6 @@ function Login() {
           />
         </div>
         {error && <p className="error-message">{error}</p>}
-        {userName && <p className="welcome-message">Bienvenido, {userName}!</p>}
         <button type="submit" disabled={loading}>
           {loading ? 'Cargando...' : 'Iniciar Sesión'}
         </button>

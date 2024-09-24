@@ -1,0 +1,58 @@
+.dashboard {
+  text-align: center;
+  padding: 20px;
+}
+
+.container-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Ajuste a un mínimo de 200px para cada tarjeta */
+  gap: 20px; /* Espacio entre los contenedores */
+  margin: 20px auto; /* Margen automático para centrar */
+  max-width: 1200px; /* Máximo ancho del contenedor */
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  text-decoration: none;
+  color: black;
+  transition: transform 0.3s, box-shadow 0.3s;
+  max-width: 100%; /* Asegúrate de que no exceda el contenedor */
+}
+
+.card img {
+  max-width: 100%; /* Asegúrate de que la imagen se ajuste al contenedor */
+  height: auto;
+  border-radius: 4px;
+}
+
+.card h2 {
+  margin: 10px 0 0; /* Margen superior */
+}
+
+.card:hover {
+  transform: scale(1.05); /* Efecto de aumento al pasar el ratón */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra al pasar el ratón */
+}
+
+/* Asegúrate de que el texto en los enlaces se vea bien en pantallas pequeñas */
+.card h2 {
+  font-size: 1.2rem; /* Tamaño de fuente ajustable */
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+  .container-grid {
+    grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+  }
+
+  .card h2 {
+    font-size: 1rem; /* Tamaño de fuente más pequeño en pantallas pequeñas */
+  }
+}
