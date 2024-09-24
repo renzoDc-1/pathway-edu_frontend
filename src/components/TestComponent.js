@@ -1,54 +1,68 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import './TestComponent.css';
+import "./TestComponent.css";
+import { useParams } from "react-router-dom"; // Importar useParams
+import Modal from "./Modal"; // Importar el componente Modal
 
 function TestComponent() {
+  const { testId } = useParams(); // Captura el testId de la URL
   const [test, setTest] = useState(null);
   const [responses, setResponses] = useState({});
+  const [result, setResult] = useState(null); // Estado para el resultado
+  const [isModalVisible, setModalVisible] = useState(false); // Estado para controlar el modal
 
-  //llamada a API
+  // Llamada a API
   useEffect(() => {
-    //axios.get("http://localhost:3000/api/v2/tests/all/3a377535-49be-4e4e-96d1-461365fc93bf")
-    axios.get("http://18.229.118.35:3002/api/tests/all/125a02c5-3778-4a0e-b6ff-bcca05c1d4a9")
-      .then(response => {
+    axios
+      .get(`http://18.229.118.35:3002/api/tests/all/${testId}`) // Usa backticks para interpolar la variable testId
+      .then((response) => {
         setTest(response.data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error al obtener el test:", error);
       });
-  }, []);
-//manejo de respuestas
+  }, [testId]); // Añadir testId como dependencia del useEffect
+
+  // Manejo de respuestas
   const handleAnswerChange = (questionId, answerId) => {
     setResponses({
       ...responses,
-      [questionId]: answerId
+      [questionId]: answerId,
     });
   };
-//envio de respuestas
+
+  // Envío de respuestas
   const handleSubmit = () => {
     const userId = "123e4567-e89b-12d3-a456-426614174000";
     const data = {
       userId: userId,
       testId: test.test_id,
-      responses: Object.keys(responses).map(questionId => ({
+      responses: Object.keys(responses).map((questionId) => ({
         question_id: questionId,
-        answer_id: responses[questionId]
-      }))
+        answer_id: responses[questionId],
+      })),
     };
     console.log("Enviando al backend:", JSON.stringify(data, null, 2));
 
-    //axios.post("http://localhost:3000/api/v2/user-test-results/submit", data)
-    axios.post("http://15.228.39.0:3000/api/v2/user-test-results/submit", data)
-      .then(response => {
+    axios
+      .post("http://18.229.118.35:3002/api/user-test-results/submit", data)
+      .then((response) => {
         console.log("Resultados guardados:", response.data);
+        setResult(response.data); // Guardar el resultado en el estado
+        setModalVisible(true); // Mostrar el modal
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error al enviar respuestas:", error);
       });
   };
 
+  const handleCloseModal = () => {
+    setModalVisible(false);
+  };
+
   if (!test) return <div>Cargando test...</div>;
-//renderizado
+
+  // Renderizado
   return (
     <div className="test-container">
       <h1>{test.test_name}</h1>
@@ -62,7 +76,9 @@ function TestComponent() {
                 type="radio"
                 name={`question-${question.question_id}`}
                 value={answer.answer_id}
-                onChange={() => handleAnswerChange(question.question_id, answer.answer_id)}
+                onChange={() =>
+                  handleAnswerChange(question.question_id, answer.answer_id)
+                }
               />
               {answer.answer_text}
             </label>
@@ -70,6 +86,15 @@ function TestComponent() {
         </div>
       ))}
       <button onClick={handleSubmit}>Enviar Respuestas</button>
+
+      {/* Mostrar el Modal solo si hay un resultado */}
+      {result && (
+        <Modal
+          isVisible={isModalVisible}
+          onClose={handleCloseModal}
+          result={result}
+        />
+      )}
     </div>
   );
 }

@@ -1,0 +1,49 @@
+.test-list-container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.test-list-title {
+  font-size: 2rem; /* Tamaño del título principal */
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.test-list {
+  list-style: none;
+  padding: 0;
+}
+
+.test-item {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.test-name {
+  font-size: 1.5rem; /* Tamaño del nombre del test */
+}
+
+.test-description {
+  font-size: 1rem; /* Tamaño de la descripción */
+}
+
+.test-date {
+  font-size: 0.8rem; /* Tamaño de la fecha de creación */
+  color: #555;
+}
+
+.test-button {
+  font-size: 1rem; /* Tamaño del botón */
+  padding: 10px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.test-button:hover {
+  background-color: #0056b3; /* Cambia el color al pasar el mouse */
+}
