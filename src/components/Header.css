@@ -4,7 +4,12 @@
   align-items: center;
   padding: 20px;
   background-color: #282c34;
-  position: relative; /* Asegúrate de que el menú se posicione correctamente */
+  position: relative; 
+  position: fixed; 
+  top: 0; 
+  left: 0;
+  width: 97%;
+  z-index: 1000;
 }
 
 nav ul {
