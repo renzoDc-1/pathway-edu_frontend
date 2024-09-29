@@ -10,7 +10,7 @@ const TestList = () => {
   useEffect(() => {
     const fetchTests = async () => {
       try {
-        const response = await fetch("http://18.229.118.35:3002/api/tests"); // URL de tu API
+        const response = await fetch("http://54.233.12.246:3000/api/tests"); // URL de tu API
         if (!response.ok) {
           throw new Error("Error al obtener los datos");
         }

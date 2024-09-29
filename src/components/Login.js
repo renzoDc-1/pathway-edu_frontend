@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import './Login.css';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import "./Login.css";
 
 function Login({ setUserName }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -17,24 +17,26 @@ function Login({ setUserName }) {
     setError(null);
 
     try {
-      const response = await axios.post('http://18.229.118.35:3001/api/users/login', {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "http://54.233.12.246:3000/api/users/login",
+        {
+          email,
+          password,
+        }
+      );
 
       const { message, user } = response.data;
 
       if (message === "User logged in successfully") {
         setUserName(`${user.first_name} ${user.last_name}`);
-        localStorage.setItem('user', JSON.stringify(user)); // Guardar datos del usuario en localStorage
-        navigate('/dashboard'); // Redirigir al Dashboard
+        localStorage.setItem("user", JSON.stringify(user)); // Guardar datos del usuario en localStorage
+        navigate("/dashboard"); // Redirigir al Dashboard
       } else {
-        setError('Credenciales inválidas');
+        setError("Credenciales inválidas");
       }
-
     } catch (error) {
-      console.error('Error al enviar las credenciales:', error);
-      setError('Hubo un problema con el servidor.');
+      console.error("Error al enviar las credenciales:", error);
+      setError("Hubo un problema con el servidor.");
     } finally {
       setLoading(false);
     }
@@ -66,7 +68,7 @@ function Login({ setUserName }) {
         </div>
         {error && <p className="error-message">{error}</p>}
         <button type="submit" disabled={loading}>
-          {loading ? 'Cargando...' : 'Iniciar Sesión'}
+          {loading ? "Cargando..." : "Iniciar Sesión"}
         </button>
       </form>
     </div>

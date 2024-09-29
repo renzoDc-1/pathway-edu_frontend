@@ -14,7 +14,7 @@ function TestComponent() {
   // Llamada a API
   useEffect(() => {
     axios
-      .get(`http://18.229.118.35:3002/api/tests/all/${testId}`) // Usa backticks para interpolar la variable testId
+      .get(`http://54.233.12.246:3000/api/tests/all/${testId}`) // Usa backticks para interpolar la variable testId
       .then((response) => {
         setTest(response.data);
       })
