@@ -71,17 +71,19 @@ function TestComponent() {
         <div key={question.question_id}>
           <h3>{question.question_text}</h3>
           {question.answers.map((answer) => (
-            <label key={answer.answer_id}>
-              <input
-                type="radio"
-                name={`question-${question.question_id}`}
-                value={answer.answer_id}
-                onChange={() =>
-                  handleAnswerChange(question.question_id, answer.answer_id)
-                }
-              />
-              {answer.answer_text}
-            </label>
+            <div key={answer.answer_id}>
+              <label>
+                <input
+                  type="radio"
+                  name={`question-${question.question_id}`}
+                  value={answer.answer_id}
+                  onChange={() =>
+                    handleAnswerChange(question.question_id, answer.answer_id)
+                  }
+                />
+                {answer.answer_text}
+              </label>
+            </div>
           ))}
         </div>
       ))}
