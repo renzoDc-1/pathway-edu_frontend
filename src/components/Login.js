@@ -18,7 +18,7 @@ function Login({ setUserName }) {
 
     try {
       const response = await axios.post(
-        "http://54.233.12.246:3000/api/users/login",
+        "http://18.228.172.203:3000/api/users/login",
         {
           email,
           password,
