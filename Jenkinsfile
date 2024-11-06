@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git branch: 'master', url: 'https://https://github.com/renzoDc-1/pathway-edu_frontend.git'
+                git branch: 'master', url: 'https://github.com/renzoDc-1/pathway-edu_frontend.git'
             }
         }
 
