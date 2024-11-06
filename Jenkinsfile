@@ -64,10 +64,10 @@ pipeline {
 
     post {
         success {
-            echo 'API Gateway deployment successful!'
+            echo 'Frontend deployment successful!'
         }
         failure {
-            echo 'API Gateway deployment failed.'
+            echo 'Frontend deployment failed.'
         }
     }
 }
