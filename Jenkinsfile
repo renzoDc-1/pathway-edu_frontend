@@ -10,7 +10,14 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh "docker build -t frontend ."
+                script {
+                    // Construir la imagen de Docker y pasar las variables de entorno
+                    sh """
+                    docker build \
+                        --build-arg VITE_API_GATEWAY=${VITE_API_GATEWAY} \
+                        -t nombre-de-imagen-frontend .
+                    """
+                }
             }
         }
 
