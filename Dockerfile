@@ -19,7 +19,6 @@ WORKDIR /app
 # Copia solo los archivos necesarios para producción
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./
 
 # Exponer el puerto 80
 EXPOSE 80
