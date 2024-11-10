@@ -1,5 +1,5 @@
-import React from 'react';
-import './Home.css';
+import React from "react";
+import "./Home.css";
 
 function Home() {
   return (
@@ -8,7 +8,7 @@ function Home() {
         <h1>============== PathwayEdu ==============</h1>
       </div>
       <div className="right-column">
-        <img src={process.env.PUBLIC_URL + '/imagen_home.png'} alt="Imagen de pantalla principal" />
+        <img src={"/imagen_home.png"} alt="Imagen de pantalla principal" />
       </div>
     </div>
   );
