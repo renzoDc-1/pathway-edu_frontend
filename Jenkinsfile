@@ -49,7 +49,7 @@ pipeline {
                             sudo docker load -i /home/jenkins/frontend.tar;
 
                             # Ejecutar el nuevo contenedor de frontend en el puerto 80
-                            echo 'Running frontend container on port 3000';
+                            echo 'Running frontend container on port 80';
                             sudo docker run -d --name frontend --network my-network -p 80:80 frontend;
 
                             # Eliminar archivo tar después de cargar la imagen
