@@ -18,7 +18,7 @@ function Login({ setUserName }) {
 
     try {
       const response = await axios.post(
-        "http://18.228.172.203:3000/api/users/login",
+        import.meta.env.VITE_API_GATEWAY + "/api/users/login",
         {
           email,
           password,

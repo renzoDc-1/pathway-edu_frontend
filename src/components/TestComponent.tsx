@@ -14,7 +14,7 @@ function TestComponent() {
   // Llamada a API
   useEffect(() => {
     axios
-      .get(`http://18.228.172.203:3000/api/tests/all/${testId}`) // Usa backticks para interpolar la variable testId
+      .get(import.meta.env.VITE_API_GATEWAY + "/api/tests/all/${testId}") // Usa backticks para interpolar la variable testId
       .then((response) => {
         setTest(response.data);
       })
@@ -45,7 +45,10 @@ function TestComponent() {
     console.log("Enviando al backend:", JSON.stringify(data, null, 2));
 
     axios
-      .post("http://18.229.118.35:3002/api/user-test-results/submit", data)
+      .post(
+        import.meta.env.VITE_API_GATEWAY + "/api/user-test-results/submit",
+        data
+      )
       .then((response) => {
         console.log("Resultados guardados:", response.data);
         setResult(response.data); // Guardar el resultado en el estado

@@ -10,7 +10,9 @@ const TestList = () => {
   useEffect(() => {
     const fetchTests = async () => {
       try {
-        const response = await fetch("http://18.228.172.203:3000/api/tests"); // URL de tu API
+        const response = await fetch(
+          import.meta.env.VITE_API_GATEWAY + "/api/tests"
+        ); // URL de tu API
         if (!response.ok) {
           throw new Error("Error al obtener los datos");
         }

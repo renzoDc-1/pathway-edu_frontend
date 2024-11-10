@@ -1,5 +1,5 @@
 // src/utils/login.js
-const api_url = "http://18.229.118.35:3001";
+const api_url = import.meta.env.VITE_API_GATEWAY;
 
 export async function auth(email, password) {
   try {
