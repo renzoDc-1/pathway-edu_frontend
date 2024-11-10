@@ -3,25 +3,20 @@ FROM node:18-alpine AS builder
 
 WORKDIR /app
 
-# Instala las dependencias
+# Instala las dependencias y construye la aplicación
 COPY package*.json ./
 RUN npm install
-
-# Copia el código fuente y construye la aplicación
 COPY . .
 RUN npm run build
 
-# Etapa de producción
-FROM node:18-alpine AS production
+# Etapa de producción usando Nginx
+FROM nginx:alpine
 
-WORKDIR /app
-
-# Copia solo los archivos necesarios para producción
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/node_modules ./node_modules
+# Copia los archivos generados en `dist` a la carpeta de Nginx
+COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Exponer el puerto 80
 EXPOSE 80
 
-# Comando para iniciar Vite en producción
-CMD ["npx", "vite", "preview", "--port", "80"]
+# Comando de inicio para Nginx (usado por defecto en la imagen de Nginx)
+CMD ["nginx", "-g", "daemon off;"]
