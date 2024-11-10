@@ -18,6 +18,6 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: "build", // Directorio de salida similar a CRA
+    outDir: "dist",
   },
 });
