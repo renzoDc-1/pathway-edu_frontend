@@ -11,10 +11,9 @@ function TestComponent() {
   const [result, setResult] = useState(null); // Estado para el resultado
   const [isModalVisible, setModalVisible] = useState(false); // Estado para controlar el modal
 
-  // Llamada a API
   useEffect(() => {
     axios
-      .get(import.meta.env.VITE_API_GATEWAY + "/api/tests/all/${testId}") // Usa backticks para interpolar la variable testId
+      .get(`${import.meta.env.VITE_API_GATEWAY}/api/tests/all/${testId}`) // Usa backticks para interpolar la variable testId
       .then((response) => {
         setTest(response.data);
       })
