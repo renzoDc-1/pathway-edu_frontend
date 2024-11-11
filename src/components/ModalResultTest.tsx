@@ -7,9 +7,9 @@ const Modal = ({ isVisible, onClose, result }) => {
     <div style={modalStyles.overlay}>
       <div style={modalStyles.modal}>
         <h2>¡Test Completado!</h2>
-        <p>Resultado: {result.result_text}</p>
+        <p>Resultado: {result.area.area_name}</p>
         <p>Test: {result.test.test_name}</p>
-        <p>Descripción: {result.test.description}</p>
+        <p>{result.area.description}</p>
         <p>
           Fecha de finalización:{" "}
           {new Date(result.completion_date).toLocaleString()}

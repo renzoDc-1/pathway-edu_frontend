@@ -1,29 +1,36 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./TestComponent.css";
-import { useParams } from "react-router-dom"; // Importar useParams
-import Modal from "./Modal"; // Importar el componente Modal
+import { useParams } from "react-router-dom";
+import Modal from "./ModalResultTest";
+import { DEFAULT_USER_ID } from "../config/constants"; // Importar la constante global
 
 function TestComponent() {
-  const { testId } = useParams(); // Captura el testId de la URL
+  const { testId } = useParams();
   const [test, setTest] = useState(null);
   const [responses, setResponses] = useState({});
-  const [result, setResult] = useState(null); // Estado para el resultado
-  const [isModalVisible, setModalVisible] = useState(false); // Estado para controlar el modal
+  const [result, setResult] = useState(null);
+  const [isModalVisible, setModalVisible] = useState(false);
 
-  console.log(import.meta.env.VITE_API_GATEWAY);
+  const [userId, setUserId] = useState(DEFAULT_USER_ID); // Usar la constante aquí
+
   useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      setUserId(user.id || DEFAULT_USER_ID); // Usar la constante en caso de que no haya un ID
+    }
+
     axios
-      .get(`${import.meta.env.VITE_API_GATEWAY}/api/tests/all/${testId}`) // Usa backticks para interpolar la variable testId
+      .get(`${import.meta.env.VITE_API_GATEWAY}/api/tests/all/${testId}`)
       .then((response) => {
         setTest(response.data);
       })
       .catch((error) => {
         console.error("Error al obtener el test:", error);
       });
-  }, [testId]); // Añadir testId como dependencia del useEffect
+  }, [testId]);
 
-  // Manejo de respuestas
   const handleAnswerChange = (questionId, answerId) => {
     setResponses({
       ...responses,
@@ -31,9 +38,7 @@ function TestComponent() {
     });
   };
 
-  // Envío de respuestas
   const handleSubmit = () => {
-    const userId = "123e4567-e89b-12d3-a456-426614174000";
     const data = {
       userId: userId,
       testId: test.test_id,
@@ -42,7 +47,6 @@ function TestComponent() {
         answer_id: responses[questionId],
       })),
     };
-    console.log("Enviando al backend:", JSON.stringify(data, null, 2));
 
     axios
       .post(
@@ -50,9 +54,8 @@ function TestComponent() {
         data
       )
       .then((response) => {
-        console.log("Resultados guardados:", response.data);
-        setResult(response.data); // Guardar el resultado en el estado
-        setModalVisible(true); // Mostrar el modal
+        setResult(response.data);
+        setModalVisible(true);
       })
       .catch((error) => {
         console.error("Error al enviar respuestas:", error);
@@ -65,7 +68,6 @@ function TestComponent() {
 
   if (!test) return <div>Cargando test...</div>;
 
-  // Renderizado
   return (
     <div className="test-container">
       <h1>{test.test_name}</h1>
@@ -92,7 +94,6 @@ function TestComponent() {
       ))}
       <button onClick={handleSubmit}>Enviar Respuestas</button>
 
-      {/* Mostrar el Modal solo si hay un resultado */}
       {result && (
         <Modal
           isVisible={isModalVisible}
