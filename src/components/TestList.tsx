@@ -1,24 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Importar useNavigate
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "./TestList.css";
-const TestList = () => {
-  const [tests, setTests] = useState([]); // Estado para almacenar los tests
-  const [loading, setLoading] = useState(true); // Estado para indicar si está cargando
-  const [error, setError] = useState(null); // Estado para manejar errores
-  const navigate = useNavigate(); // Hook para navegar
 
-  console.log(import.meta.env.VITE_API_GATEWAY);
+const TestList = () => {
+  const [tests, setTests] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchTests = async () => {
       try {
-        const response = await fetch(
-          import.meta.env.VITE_API_GATEWAY + "/api/tests"
-        ); // URL de tu API
-        if (!response.ok) {
-          throw new Error("Error al obtener los datos");
-        }
-        const data = await response.json();
-        setTests(data);
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_GATEWAY}/api/tests`
+        );
+        setTests(response.data);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -30,7 +27,7 @@ const TestList = () => {
   }, []);
 
   const handleTakeTest = (testId) => {
-    navigate(`/test/${testId}`); // Navega al componente de test con el ID
+    navigate(`/test/${testId}`);
   };
 
   if (loading) {

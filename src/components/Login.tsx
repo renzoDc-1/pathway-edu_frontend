@@ -18,7 +18,7 @@ function Login({ setUserName }) {
 
     try {
       const response = await axios.post(
-        import.meta.env.VITE_API_GATEWAY + "/api/users/login",
+        `${import.meta.env.VITE_API_GATEWAY}/api/users/login`, // Use backticks for the URL
         {
           email,
           password,
