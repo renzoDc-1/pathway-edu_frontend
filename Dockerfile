@@ -6,6 +6,12 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 
+# Define el argumento de construcción para VITE_API_GATEWAY
+ARG VITE_API_GATEWAY
+
+# Configura VITE_API_GATEWAY como variable de entorno para que Vite la use
+ENV VITE_API_GATEWAY=$VITE_API_GATEWAY
+
 # Copia el resto del código
 COPY . .
 
