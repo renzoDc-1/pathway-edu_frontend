@@ -7,6 +7,7 @@ const TestList = () => {
   const [error, setError] = useState(null); // Estado para manejar errores
   const navigate = useNavigate(); // Hook para navegar
 
+  console.log(import.meta.env.VITE_API_GATEWAY);
   useEffect(() => {
     const fetchTests = async () => {
       try {
