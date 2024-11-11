@@ -15,7 +15,7 @@ pipeline {
                     sh """
                     docker build \
                         --build-arg VITE_API_GATEWAY=${VITE_API_GATEWAY} \
-                        -t nombre-de-imagen-frontend .
+                        -t frontend .
                     """
                 }
             }
