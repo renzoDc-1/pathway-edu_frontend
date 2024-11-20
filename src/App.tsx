@@ -8,6 +8,7 @@ import Login from "./components/Login";
 import TestList from "./components/TestList";
 import Dashboard from "./components/Dashboard";
 import Header from "./components/Header";
+import CentroDeEstudios from "./components/CentroDeEstudios";
 
 function App() {
   const [userName, setUserName] = useState(""); // Estado para el nombre del usuario
@@ -37,6 +38,7 @@ function App() {
           <Route path="/test/:testId" element={<TestComponent />} />
           <Route path="/login" element={<Login setUserName={setUserName} />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/centro-de-estudios" element={<CentroDeEstudios />} />
         </Routes>
       </div>
     </Router>
