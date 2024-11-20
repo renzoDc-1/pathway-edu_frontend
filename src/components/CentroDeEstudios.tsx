@@ -37,7 +37,15 @@ function CentroDeEstudios() {
   // Filtrar centros de estudio según el área seleccionada en la URL
   const filteredCentros = areaSelected
     ? centros.filter((centro) => centro.area_id === areaSelected)
-    : centros;
+    : centros.filter(
+        (centro, index, self) =>
+          index ===
+          self.findIndex(
+            (c) =>
+              c.centroDeEstudio.centroDeEstudios_id ===
+              centro.centroDeEstudio.centroDeEstudios_id
+          )
+      );
 
   return (
     <div className="centro-de-estudios-container">

@@ -46,7 +46,7 @@ function Home() {
             onClick={() => handleDisciplineClick(discipline.area_id)}
           >
             <img
-              src={`../../public/images/disciplines/${discipline.area_name}.svg`}
+              src={`/images/disciplines/${discipline.area_name}.svg`}
               alt={`${discipline.area_name} icon`}
               className="discipline-icon"
             />
