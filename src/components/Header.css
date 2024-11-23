@@ -4,11 +4,11 @@
   align-items: center;
   padding: 20px;
   background-color: #282c34;
-  position: relative; 
-  position: fixed; 
-  top: 0; 
+  position: relative;
+  position: fixed;
+  top: 0;
   left: 0;
-  width: 97%;
+  width: 97.9%;
   z-index: 1000;
 }
 

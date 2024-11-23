@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Navigate } from "react-router-dom";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
@@ -9,8 +10,13 @@ import TestList from "./components/TestList";
 import Dashboard from "./components/Dashboard";
 import Header from "./components/Header";
 import CentroDeEstudios from "./components/CentroDeEstudios";
+import UserCRUD from "./components/UserCRUD";
 
 function App() {
+  useEffect(() => {
+    document.title = "PathwayEdu";
+  }, []);
+
   const [userName, setUserName] = useState(""); // Estado para el nombre del usuario
 
   useEffect(() => {
@@ -37,8 +43,18 @@ function App() {
           <Route path="/test" element={<TestList />} />
           <Route path="/test/:testId" element={<TestComponent />} />
           <Route path="/login" element={<Login setUserName={setUserName} />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route
+            path="/dashboard"
+            element={
+              localStorage.getItem("user") ? (
+                <Dashboard />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
           <Route path="/centro-de-estudios" element={<CentroDeEstudios />} />
+          <Route path="/user-management" element={<UserCRUD />} />
         </Routes>
       </div>
     </Router>

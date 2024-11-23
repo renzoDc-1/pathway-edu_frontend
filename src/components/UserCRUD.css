@@ -1,0 +1,165 @@
+/* UserCRUD.css */
+
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 20px;
+}
+
+.user-crud {
+  max-width: 600px; /* Ancho máximo del contenedor */
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+h2 {
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.create-user,
+.user-list {
+  margin-bottom: 20px;
+  padding: 15px; /* Padding en el contenedor */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fafafa;
+}
+
+.create-user h3,
+.user-list h3 {
+  color: #007bff;
+  margin-bottom: 15px;
+  text-align: center; /* Centrado del título */
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Estilo del botón de crear usuario */
+.create-user button {
+  width: 100%; /* Hacer que el botón ocupe todo el ancho del contenedor */
+  padding: 12px 20px; /* Aumentar el padding para que se vea más grande */
+  font-size: 18px; /* Aumentar el tamaño de la fuente para mayor legibilidad */
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+}
+
+.create-user button:hover {
+  background-color: #0056b3; /* Color más oscuro al pasar el mouse */
+  transform: translateY(-2px); /* Efecto de desplazamiento */
+}
+
+.create-user button:active {
+  transform: translateY(0); /* Vuelve a su posición original al hacer clic */
+}
+
+.user-list {
+  max-width: 100%; /* Asegura que no exceda el contenedor */
+}
+
+.user-list ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex; /* Cambiado a flex para centrar */
+  flex-direction: column; /* Direccionar los elementos en columna */
+  align-items: center; /* Centrar elementos */
+}
+
+.user-list li {
+  width: 90%; /* Ancho reducido para centrar mejor */
+  padding: 15px;
+  margin: 5px 0; /* Espaciado entre usuarios */
+  border: 1px solid #ddd; /* Borde de cada usuario */
+  border-radius: 4px; /* Esquinas redondeadas */
+  background-color: #ffffff; /* Fondo blanco para cada usuario */
+  transition: background-color 0.3s; /* Transición suave para el hover */
+}
+
+.user-list li:hover {
+  background-color: #f1f1f1; /* Color de fondo al pasar el mouse */
+}
+
+span {
+  font-size: 16px;
+  color: #555;
+  display: block; /* Asegura que el texto ocupe toda la línea */
+  text-align: center; /* Centrar el texto */
+}
+
+button {
+  margin-left: 10px;
+}
+
+/* Estilos para el contenedor de la contraseña */
+.password-container {
+  position: relative; /* Permite posicionar el ícono de ojo */
+}
+
+.password-eye {
+  position: absolute;
+  top: 50%;
+  right: 10px; /* Espacio a la derecha del campo de entrada */
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 20px; /* Tamaño del ícono */
+  color: #007bff; /* Color del ícono */
+}
+
+/* Media queries para adaptabilidad */
+@media (max-width: 600px) {
+  .user-crud {
+    padding: 15px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  select {
+    font-size: 14px;
+  }
+
+  .create-user button {
+    padding: 10px 15px; /* Ajustar padding en móviles */
+  }
+
+  .password-eye {
+    font-size: 18px; /* Tamaño del ícono en móviles */
+  }
+
+  .user-list li {
+    flex-direction: column; /* Cambiar a columna en pantallas pequeñas */
+    align-items: flex-start; /* Alinear elementos al inicio */
+  }
+
+  .user-list li span {
+    margin-bottom: 5px; /* Espacio entre el texto y los botones */
+  }
+}
