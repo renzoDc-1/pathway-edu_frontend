@@ -18,7 +18,7 @@ function TestComponent() {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       const user = JSON.parse(storedUser);
-      setUserId(user.id || DEFAULT_USER_ID); // Usar la constante en caso de que no haya un ID
+      setUserId(user.user_id || DEFAULT_USER_ID); // Usar la constante en caso de que no haya un ID
     }
 
     axios
