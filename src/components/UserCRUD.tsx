@@ -4,6 +4,11 @@ import { useNavigate } from "react-router-dom";
 import "./UserCRUD.css";
 
 // Definición de tipos
+interface Ubigeo {
+  id: string;
+  name: string;
+}
+
 interface User {
   user_id: number;
   first_name: string;
@@ -13,6 +18,7 @@ interface User {
   date_of_birth: string;
   gender_id: number;
   role_id: number;
+  ubigeo_id: string; // Agregamos el ID del Ubigeo
 }
 
 interface NewUser {
@@ -22,6 +28,7 @@ interface NewUser {
   password_hash: string;
   date_of_birth: string;
   gender_id: number;
+  ubigeo_id: string;
   role_id: number;
 }
 
@@ -42,11 +49,18 @@ function UserCRUD() {
     password_hash: "",
     date_of_birth: "",
     gender_id: 1,
+    ubigeo_id: "",
     role_id: 1,
   });
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [showPassword, setShowPassword] = useState(false);
-
+  const [countries, setCountries] = useState<Ubigeo[]>([]);
+  const [departments, setDepartments] = useState<Ubigeo[]>([]);
+  const [provinces, setProvinces] = useState<Ubigeo[]>([]);
+  const [cities, setCities] = useState<Ubigeo[]>([]);
+  const [selectedCountry, setSelectedCountry] = useState<string>("");
+  const [selectedDepartment, setSelectedDepartment] = useState<string>("");
+  const [selectedProvince, setSelectedProvince] = useState<string>("");
   const currentUser: CurrentUser = {
     role: {
       role_id: 3,
@@ -63,6 +77,7 @@ function UserCRUD() {
 
   useEffect(() => {
     fetchUsers();
+    fetchCountries();
   }, []);
 
   const fetchUsers = async () => {
@@ -77,6 +92,53 @@ function UserCRUD() {
     }
   };
 
+  const fetchCountries = async () => {
+    try {
+      const response = await axios.get<Ubigeo[]>(
+        `${import.meta.env.VITE_API_GATEWAY}/api/ubigeo/countries`
+      );
+      setCountries(response.data);
+    } catch (error) {
+      console.error("Error fetching countries:", error);
+    }
+  };
+
+  const fetchDepartments = async (countryId: string) => {
+    try {
+      const response = await axios.get<Ubigeo[]>(
+        `${
+          import.meta.env.VITE_API_GATEWAY
+        }/api/ubigeo/departamentos/${countryId}`
+      );
+      setDepartments(response.data);
+    } catch (error) {
+      console.error("Error fetching departments:", error);
+    }
+  };
+
+  const fetchProvinces = async (departmentId: string) => {
+    try {
+      const response = await axios.get<Ubigeo[]>(
+        `${
+          import.meta.env.VITE_API_GATEWAY
+        }/api/ubigeo/provincias/${departmentId}`
+      );
+      setProvinces(response.data);
+    } catch (error) {
+      console.error("Error fetching provinces:", error);
+    }
+  };
+
+  const fetchCities = async (provinceId: string) => {
+    try {
+      const response = await axios.get<Ubigeo[]>(
+        `${import.meta.env.VITE_API_GATEWAY}/api/ubigeo/ciudades/${provinceId}`
+      );
+      setCities(response.data);
+    } catch (error) {
+      console.error("Error fetching cities:", error);
+    }
+  };
   const createUser = async () => {
     if (
       !newUser.first_name ||
@@ -93,6 +155,7 @@ function UserCRUD() {
       ...newUser,
       gender: { gender_id: newUser.gender_id },
       role: { role_id: newUser.role_id },
+      ubigeo: { id: newUser.ubigeo_id },
     };
 
     try {
@@ -110,6 +173,7 @@ function UserCRUD() {
         date_of_birth: "",
         gender_id: 1,
         role_id: 1,
+        ubigeo_id: "",
       });
     } catch (error: any) {
       console.error(
@@ -218,6 +282,7 @@ function UserCRUD() {
             👁️
           </span>
         </div>
+
         <input
           type="date"
           placeholder="Fecha de Nacimiento"
@@ -244,6 +309,64 @@ function UserCRUD() {
           <option value="1">Estudiante</option>
           <option value="2">Profesor</option>
           <option value="3">Admin</option>
+        </select>
+        <select
+          value={selectedCountry}
+          onChange={(e) => {
+            setSelectedCountry(e.target.value);
+            fetchDepartments(e.target.value);
+            setNewUser({ ...newUser, ubigeo_id: "" }); // Reset Ubigeo
+          }}
+        >
+          <option value="">Seleccionar País</option>
+          {countries.map((country) => (
+            <option key={country.id} value={country.id}>
+              {country.name}
+            </option>
+          ))}
+        </select>
+        <select
+          value={selectedDepartment}
+          onChange={(e) => {
+            setSelectedDepartment(e.target.value);
+            fetchProvinces(e.target.value);
+            setNewUser({ ...newUser, ubigeo_id: "" }); // Reset Ubigeo
+          }}
+        >
+          <option value="">Seleccionar Departamento</option>
+          {departments.map((department) => (
+            <option key={department.id} value={department.id}>
+              {department.name}
+            </option>
+          ))}
+        </select>
+        <select
+          value={selectedProvince}
+          onChange={(e) => {
+            setSelectedProvince(e.target.value);
+            fetchCities(e.target.value);
+            setNewUser({ ...newUser, ubigeo_id: "" }); // Reset Ubigeo
+          }}
+        >
+          <option value="">Seleccionar Provincia</option>
+          {provinces.map((province) => (
+            <option key={province.id} value={province.id}>
+              {province.name}
+            </option>
+          ))}
+        </select>
+        <select
+          value={newUser.ubigeo_id}
+          onChange={(e) =>
+            setNewUser({ ...newUser, ubigeo_id: e.target.value })
+          }
+        >
+          <option value="">Seleccionar Ciudad</option>
+          {cities.map((city) => (
+            <option key={city.id} value={city.id}>
+              {city.name}
+            </option>
+          ))}
         </select>
         <button onClick={createUser}>Crear Usuario</button>
       </div>

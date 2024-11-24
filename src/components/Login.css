@@ -12,7 +12,7 @@
   color: #333;
   font-size: 24px;
   margin-bottom: 20px;
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   text-align: center;
 }
 
@@ -50,6 +50,9 @@ form {
   border-color: #007bff;
   outline: none;
 }
+.spacer {
+  height: 20px; /* Altura del espacio */
+}
 
 button {
   width: 100%;
@@ -83,7 +86,7 @@ button:hover:enabled {
   form {
     padding: 20px;
   }
-  
+
   .login-container h2 {
     font-size: 20px;
   }

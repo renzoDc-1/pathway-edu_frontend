@@ -6,6 +6,7 @@ import "./CentroDeEstudios.css";
 function CentroDeEstudios() {
   const [centros, setCentros] = useState([]);
   const [areas, setAreas] = useState([]);
+  const [ubicaciones, setUbicaciones] = useState({});
   const [loading, setLoading] = useState(true);
   const location = useLocation();
   const areaSelected = new URLSearchParams(location.search).get("area");
@@ -47,6 +48,47 @@ function CentroDeEstudios() {
           )
       );
 
+  // Obtener ubicaciones solo para los centros filtrados
+  useEffect(() => {
+    const fetchUbicaciones = async () => {
+      const ubicacionPromises = filteredCentros
+        .filter((centro) => !ubicaciones[centro.areaCentroDeEstudio_id]) // Evitar llamadas duplicadas
+        .map((centro) =>
+          axios
+            .get(
+              `${import.meta.env.VITE_API_GATEWAY}/api/ubigeo/${
+                centro.ubicacion
+              }`
+            )
+            .then((response) => ({
+              id: centro.areaCentroDeEstudio_id,
+              ubicacion: response.data.name || "Ubicación no disponible",
+            }))
+            .catch((error) => {
+              console.error(
+                `Error al obtener la ubicación para el centro ${centro.areaCentroDeEstudio_id}`,
+                error
+              );
+              return {
+                id: centro.areaCentroDeEstudio_id,
+                ubicacion: "Error al obtener la ubicación",
+              };
+            })
+        );
+
+      const ubicacionData = await Promise.all(ubicacionPromises);
+      const ubicacionMap = { ...ubicaciones }; // Copiar estado actual de ubicaciones
+      ubicacionData.forEach(({ id, ubicacion }) => {
+        ubicacionMap[id] = ubicacion;
+      });
+      setUbicaciones(ubicacionMap);
+    };
+
+    if (filteredCentros.length > 0) {
+      fetchUbicaciones();
+    }
+  }, [filteredCentros, ubicaciones]);
+
   return (
     <div className="centro-de-estudios-container">
       <h1>Centro de Estudios</h1>
@@ -81,7 +123,11 @@ function CentroDeEstudios() {
                 />
                 <div className="centro-info">
                   <h2>{centro.centroDeEstudio.nombre}</h2>
-                  <p>Ubicación: {centro.ubicacion}</p>
+                  <p>
+                    Ubicación:{" "}
+                    {ubicaciones[centro.areaCentroDeEstudio_id] ||
+                      "Cargando..."}
+                  </p>
                   <p>
                     Área:{" "}
                     {

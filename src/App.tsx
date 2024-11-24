@@ -18,6 +18,7 @@ function App() {
   }, []);
 
   const [userName, setUserName] = useState(""); // Estado para el nombre del usuario
+  const [userRoleId, setUserRoleId] = useState(""); // Estado para el nombre del usuario
 
   useEffect(() => {
     // Cargar los datos del usuario desde el localStorage al iniciar la app
@@ -25,6 +26,7 @@ function App() {
     if (storedUser) {
       const user = JSON.parse(storedUser);
       setUserName(`${user.first_name} ${user.last_name}`);
+      setUserRoleId(user.role_id);
     }
   }, []);
 
@@ -36,7 +38,11 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Header userName={userName} onLogout={handleLogout} />
+        <Header
+          userName={userName}
+          userRoleId={userRoleId}
+          onLogout={handleLogout}
+        />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/objetivo" element={<Objective />} />
