@@ -20,14 +20,12 @@ WORKDIR /app
 
 # Copiar los archivos estáticos y el servidor desde la etapa de construcción
 COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/server.js ./server.js
-COPY --from=builder /app/package*.json ./
 
 # Instalar todas las dependencias (incluyendo las de desarrollo)
 RUN npm install --production=false
 
 # Exponer el puerto 3000
-EXPOSE 3000
+EXPOSE 80
 
 # Comando para iniciar el servidor
-CMD ["node", "server.js"]
+CMD ["npm", "run","preview"]
