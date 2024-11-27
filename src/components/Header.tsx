@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Header.css";
-import { Navigate } from "react-router-dom";
 
 function Header({
   userName,
@@ -11,11 +10,7 @@ function Header({
   onLogout: () => void;
 }) {
   const storedUser = localStorage.getItem("user");
-  if (!storedUser) {
-    // Redirige a login si no hay usuario almacenado
-    return <Navigate to="/login" />;
-  }
-  const user = JSON.parse(storedUser);
+  const user = storedUser ? JSON.parse(storedUser) : null;
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
@@ -76,7 +71,7 @@ function Header({
               <Link to="/dashboard">Dashboard</Link>
             </li>
           )}
-          {user?.role?.role_id == 3 && (
+          {user?.role?.role_id === 3 && (
             <li>
               <Link to="/dashboard-bi">Dashboard BI</Link>
             </li>
