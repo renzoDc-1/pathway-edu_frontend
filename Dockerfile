@@ -18,16 +18,16 @@ RUN rm -rf dist && npm run build
 FROM node:18-alpine
 WORKDIR /app
 
-# Copiar archivos estáticos y el servidor desde la etapa de construcción
+# Copiar los archivos estáticos y el servidor desde la etapa de construcción
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/server.js ./server.js
 COPY --from=builder /app/package*.json ./
 
-# Instalar solo las dependencias necesarias para producción
-RUN npm install --production
+# Instalar todas las dependencias (incluyendo las de desarrollo)
+RUN npm install --production=false
 
 # Exponer el puerto 3000
-EXPOSE 80
+EXPOSE 3000
 
 # Comando para iniciar el servidor
 CMD ["node", "server.js"]
