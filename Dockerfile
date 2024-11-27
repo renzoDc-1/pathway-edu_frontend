@@ -27,7 +27,7 @@ COPY --from=builder /app/package*.json ./
 RUN npm install --production
 
 # Exponer el puerto 3000
-EXPOSE 3000
+EXPOSE 80
 
 # Comando para iniciar el servidor
 CMD ["node", "server.js"]
