@@ -11,6 +11,7 @@ import Dashboard from "./components/Dashboard";
 import Header from "./components/Header";
 import CentroDeEstudios from "./components/CentroDeEstudios";
 import UserCRUD from "./components/UserCRUD";
+import DashboardBI from "./components/DashboardBI";
 
 function App() {
   useEffect(() => {
@@ -18,7 +19,7 @@ function App() {
   }, []);
 
   const [userName, setUserName] = useState(""); // Estado para el nombre del usuario
-  const [userRoleId, setUserRoleId] = useState(""); // Estado para el nombre del usuario
+  const [userRoleId, setUserRoleId] = useState(""); // Estado para el rol del usuario
 
   useEffect(() => {
     // Cargar los datos del usuario desde el localStorage al iniciar la app
@@ -32,6 +33,7 @@ function App() {
 
   const handleLogout = () => {
     setUserName(""); // Reinicia el nombre del usuario
+    setUserRoleId(""); // Reinicia el rol del usuario
     localStorage.removeItem("user"); // Limpia el localStorage
   };
 
@@ -49,6 +51,16 @@ function App() {
           <Route path="/test" element={<TestList />} />
           <Route path="/test/:testId" element={<TestComponent />} />
           <Route path="/login" element={<Login setUserName={setUserName} />} />
+          <Route
+            path="/dashboard-bi"
+            element={
+              localStorage.getItem("user") ? (
+                <DashboardBI />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
           <Route
             path="/dashboard"
             element={

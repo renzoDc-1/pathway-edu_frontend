@@ -56,3 +56,13 @@
   font-size: 14px;
   color: #333;
 }
+
+.dashboard-bi {
+  padding-top: 100px; /* Baja el iframe 20px */
+}
+
+.dashboard-iframe {
+  border: none; /* Asegura que no haya bordes */
+  display: block; /* Evita problemas de alineación */
+  margin: 0 auto; /* Centra el iframe si es necesario */
+}

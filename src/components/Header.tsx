@@ -9,6 +9,13 @@ function Header({
   userName: string;
   onLogout: () => void;
 }) {
+  const storedUser = localStorage.getItem("user");
+  if (!storedUser) {
+    // Redirige a login si no hay usuario almacenado
+    return <Navigate to="/login" />;
+  }
+  const user = JSON.parse(storedUser);
+
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -66,6 +73,11 @@ function Header({
           {userName && (
             <li>
               <Link to="/dashboard">Dashboard</Link>
+            </li>
+          )}
+          {user?.role?.role_id == 3 && (
+            <li>
+              <Link to="/dashboard-bi">Dashboard BI</Link>
             </li>
           )}
         </ul>

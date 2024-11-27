@@ -2,28 +2,32 @@
 FROM node:18-alpine AS builder
 WORKDIR /app
 
-# Copia los archivos de configuración de dependencias
+# Copiar y descargar dependencias
 COPY package*.json ./
 RUN npm install
 
-# Define el argumento de construcción para VITE_API_GATEWAY
+# Definir variable de entorno para VITE
 ARG VITE_API_GATEWAY
-
-# Configura VITE_API_GATEWAY como variable de entorno para que Vite la use
 ENV VITE_API_GATEWAY=$VITE_API_GATEWAY
 
-# Copia el resto del código
+# Copiar el resto del código y construir la aplicación
 COPY . .
-
-# Asegúrate de eliminar la carpeta dist si existe antes de construir
 RUN rm -rf dist && npm run build
 
-# Etapa de producción usando Nginx
-FROM nginx:alpine
-COPY --from=builder /app/dist /usr/share/nginx/html
+# Etapa de producción
+FROM node:18-alpine
+WORKDIR /app
 
-# Exponer el puerto 80
-EXPOSE 80
+# Copiar archivos estáticos y el servidor desde la etapa de construcción
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/server.js ./server.js
+COPY --from=builder /app/package*.json ./
 
-# Comando de inicio para Nginx (por defecto en la imagen de Nginx)
-CMD ["nginx", "-g", "daemon off;"]
+# Instalar solo las dependencias necesarias para producción
+RUN npm install --production
+
+# Exponer el puerto 3000
+EXPOSE 3000
+
+# Comando para iniciar el servidor
+CMD ["node", "server.js"]
