@@ -7,8 +7,8 @@ WORKDIR /app
 # Copia los archivos de configuración de dependencias
 COPY package*.json ./
 
-# Instala solo las dependencias necesarias para producción
-RUN npm install --only=production
+# Instala las dependencias necesarias para producción y Vite globalmente
+RUN npm install --only=production && npm install -g vite
 
 # Copia el resto del código fuente al contenedor
 COPY . .
@@ -18,11 +18,11 @@ ARG VITE_API_GATEWAY
 # Configura VITE_API_GATEWAY como variable de entorno para Vite
 ENV VITE_API_GATEWAY=$VITE_API_GATEWAY
 
-# Asegúrate de que la aplicación esté lista
-RUN vite build 
+# Construye la aplicación usando Vite
+RUN vite build
 
 # Expone el puerto en el que se ejecutará Vite
 EXPOSE 80
 
 # Comando para iniciar Vite en modo de producción
-CMD ["vite"]
+CMD ["npm", "run", "preview"]
