@@ -19,10 +19,10 @@ ARG VITE_API_GATEWAY
 ENV VITE_API_GATEWAY=$VITE_API_GATEWAY
 
 # Asegúrate de que la aplicación esté lista
-RUN npm run build
+RUN vite build 
 
 # Expone el puerto en el que se ejecutará Vite
 EXPOSE 80
 
 # Comando para iniciar Vite en modo de producción
-CMD ["npm", "run", "preview"]
+CMD ["vite"]
