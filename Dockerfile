@@ -22,10 +22,10 @@ WORKDIR /app
 COPY --from=builder /app/dist ./dist
 
 # Instalar todas las dependencias (incluyendo las de desarrollo)
-RUN npm install --production=false
+RUN npm install 
 
 # Exponer el puerto 3000
 EXPOSE 80
 
 # Comando para iniciar el servidor
-CMD ["npm", "run","preview"]
+CMD ["npm", "start","run"]
